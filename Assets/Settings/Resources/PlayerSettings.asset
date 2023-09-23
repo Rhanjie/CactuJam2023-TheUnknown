@@ -18,4 +18,5 @@ MonoBehaviour:
   damage: 2
   acceleration: 30
   velocityPower: 2
+  friction: -50
   test: 0

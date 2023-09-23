@@ -10,6 +10,9 @@ public abstract class Character : MonoBehaviour, IAttackable, IHittable, IDestro
     [SerializeField]
     protected MovementBehaviour movement;
     
+    [SerializeField]
+    protected AttackBehaviour attack;
+    
     public float CurrentHealth { get; private set; }
     
     private void Start()
@@ -20,11 +23,12 @@ public abstract class Character : MonoBehaviour, IAttackable, IHittable, IDestro
     private void OnValidate()
     {
         movement.UpdateSettings(settings);
+        attack.UpdateSettings(settings);
     }
 
     public void Attack()
     {
-        //TODO: Not implemented
+        attack.Attack();
     }
 
     public void Hit()

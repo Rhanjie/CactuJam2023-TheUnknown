@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovementBehaviour : MonoBehaviour, IMoveable
 {
@@ -14,10 +16,18 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
     [SerializeField]
     private Transform handPoint;
     
+    private Camera _mainCamera;
     private CharacterSettings _settings;
     
     private float _horizontalMove;
     private float _verticalMove;
+
+    private void Start()
+    {
+        _mainCamera = GameObject
+            .FindWithTag("MainCamera")
+            .GetComponent<Camera>();
+    }
 
     public void UpdateSettings(CharacterSettings settings)
     {
@@ -26,6 +36,8 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
 
     private void FixedUpdate()
     {
+        CalculateTargetDirection();
+        
         var movement = CalculateMovement();
         ApplyForce(movement, ForceMode2D.Force);
 
@@ -37,9 +49,6 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
     {
         _horizontalMove = delta.x;
         _verticalMove = delta.y;
-        
-        if (ShouldBeFlipped())
-            Flip();
     }
     
     private Vector2 CalculateMovement()
@@ -72,10 +81,28 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
         
         physics.AddForce(force, mode);
     }
-    
-    private bool ShouldBeFlipped()
+
+    private void CalculateTargetDirection()
     {
-        return IsFacingRight && _horizontalMove > 0f || !IsFacingRight && _horizontalMove < 0f;
+        var direction = GetDirectionToMouse();
+        if (ShouldBeFlipped(direction.x))
+            Flip();
+    }
+
+    private Vector2 GetDirectionToMouse()
+    {
+        var mousePosition = Mouse.current.position;
+        var convertedPosition = _mainCamera.ScreenToWorldPoint(mousePosition.value);
+        
+        var handPosition = transform.position;
+        var direction = new Vector2(handPosition.x - convertedPosition.x, handPosition.y - convertedPosition.y);
+
+        return direction;
+    }
+    
+    private bool ShouldBeFlipped(float horizontalDirection)
+    {
+        return IsFacingRight && horizontalDirection < 0 || !IsFacingRight && horizontalDirection > 0;
     }
     
     private void Flip()
