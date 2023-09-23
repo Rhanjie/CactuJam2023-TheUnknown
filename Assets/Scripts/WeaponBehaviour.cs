@@ -4,17 +4,23 @@ using UnityEngine.InputSystem;
 public class WeaponBehaviour : MonoBehaviour
 {
     [SerializeField]
-    private Camera _camera;
+    private Camera mainCamera;
 
-    // Update is called once per frame
+    private Transform _cachedTransform;
+
+    private void Start()
+    {
+        _cachedTransform = transform;
+    }
+    
     private void Update()
     {
         var mousePosition = Mouse.current.position;
+        var convertedPosition = mainCamera.ScreenToWorldPoint(mousePosition.value);
+        
+        var handPosition = _cachedTransform.position;
+        var direction = new Vector2(convertedPosition.x - handPosition.x, convertedPosition.y - handPosition.y);
 
-        var convertedPosition = _camera.ScreenToWorldPoint(mousePosition.value);
-
-        var direction = new Vector2(convertedPosition.x - transform.position.x, convertedPosition.y - transform.position.y);
-
-        transform.up = direction;
+        _cachedTransform.up = direction;
     }
 }

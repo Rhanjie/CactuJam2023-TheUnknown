@@ -19,7 +19,7 @@ public class Player : Character
     {
         var delta = context.ReadValue<Vector2>();
             
-        Move(delta);
+        movement.Move(delta);
     }
 
     public override void Destroy()
