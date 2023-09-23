@@ -34,8 +34,8 @@ public abstract class Character : MonoBehaviour, IMoveable, IJumpable, IAttackab
         var movement = CalculateMovement();
         ApplyForce(movement, ForceMode2D.Force);
 
-        //var friction = CalculateFriction();
-        //ApplyForce(friction, ForceMode2D.Impulse);
+        var friction = CalculateFriction();
+        ApplyForce(friction, ForceMode2D.Impulse);
     }
     
     public void Move(Vector2 delta)
@@ -68,23 +68,23 @@ public abstract class Character : MonoBehaviour, IMoveable, IJumpable, IAttackab
     {
         var targetSpeed = new Vector2(_horizontalMove, _verticalMove) * settings.speed;
         var speedDifference = targetSpeed - physics.velocity;
-
-        //var direction = speedDifference.normalized;
         
         var movement = speedDifference * settings.acceleration;
         return movement;
     }
 
-    private float CalculateFriction()
+    private Vector2 CalculateFriction()
     {
         if (Mathf.Abs(_horizontalMove) >= 0.01f)
-            return 0;
+            return Vector2.zero;
 
-        //var amount = Mathf.Min(Mathf.Abs(physics.velocity.x), Mathf.Abs(settings.frictionAmount));
-        //amount *= Mathf.Sign(physics.velocity.x);
+        var frictionX = Mathf.Min(Mathf.Abs(physics.velocity.x), Mathf.Abs(settings.friction));
+        frictionX *= -Mathf.Sign(physics.velocity.x);
         
-        //return amount;
-        return 0;
+        var frictionY = Mathf.Min(Mathf.Abs(physics.velocity.y), Mathf.Abs(settings.friction));
+        frictionY *= -Mathf.Sign(physics.velocity.y);
+        
+        return new Vector2(frictionX, frictionY);
     }
     
     public void ApplyForce(Vector2 force, ForceMode2D mode)

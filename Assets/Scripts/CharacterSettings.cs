@@ -9,5 +9,6 @@ public class CharacterSettings : ScriptableObject
     
     public float acceleration;
     public float velocityPower;
-    
+    public float friction;
+
 }

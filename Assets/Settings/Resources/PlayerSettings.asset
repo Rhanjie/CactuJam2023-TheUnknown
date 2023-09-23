@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Player
   health: 10
-  speed: 5
+  speed: 10
   damage: 2
-  acceleration: 4
+  acceleration: 30
   velocityPower: 2
   test: 0
