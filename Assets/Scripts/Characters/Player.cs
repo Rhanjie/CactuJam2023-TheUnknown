@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Characters.Interfaces;
 using UI;
@@ -15,11 +16,20 @@ namespace Characters
         private Camera _mainCamera;
         private IInteractable _target = null;
     
-        private void Start()
+        protected override void Start()
         {
+            OnHealthChanged += hud.UpdateHealth;
+            
             _mainCamera = GameObject
                 .FindWithTag("MainCamera")
                 .GetComponent<Camera>();
+            
+            base.Start();
+        }
+
+        private void OnDestroy()
+        {
+            OnHealthChanged -= hud.UpdateHealth;
         }
 
         protected override void Update()

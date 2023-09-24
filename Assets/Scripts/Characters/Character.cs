@@ -3,6 +3,7 @@ using Characters.Behaviours;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class Character : MonoBehaviour, IHittable, IDestroyable
 {
@@ -36,14 +37,26 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
         }
     }
 
-    public Transform Handler { get; private set; }
-    public float CurrentHealth { get; private set; }
+    public Transform Handler { get; protected set; }
 
+    public int CurrentHealth
+    {
+        get => _currentHealth;
+        protected set
+        {
+            _currentHealth = value;
+            OnHealthChanged?.Invoke(value);
+        }
+    }
+
+    public UnityAction<int> OnHealthChanged;
+
+    private int _currentHealth;
     private bool _isInsensitive;
     
     private static readonly int Velocity = Animator.StringToHash("Velocity");
 
-    private void Start()
+    protected virtual void Start()
     {
         Handler = transform;
         CurrentHealth = settings.health;
@@ -63,7 +76,7 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
         animator.SetFloat(Velocity, movement.Velocity);
     }
 
-    public void Hit(float damage)
+    public void Hit(int damage)
     {
         if (_isInsensitive)
             return;

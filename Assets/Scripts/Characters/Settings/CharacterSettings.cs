@@ -6,8 +6,8 @@ public class CharacterSettings : ScriptableObject
     public string title;
     
     [Header("Attack")]
-    public float health;
-    public float damage;
+    public int health;
+    public int damage;
     public float range;
     public float insensitivityTime;
     public float attackTime;

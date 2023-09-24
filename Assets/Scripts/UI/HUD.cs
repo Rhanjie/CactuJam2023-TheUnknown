@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,17 @@ namespace UI
         
         [SerializeField]
         private Dictionary dictionary;
+        
+        [SerializeField]
+        private HeartContainer heartContainer;
+
+        public void UpdateHealth(int difference)
+        {
+            if (difference > 0)
+                heartContainer.AddHealth(difference);
+
+            else heartContainer.RemoveHealth(difference);
+        }
 
         public void ToggleInteractionText(bool value)
         {
