@@ -1,7 +1,10 @@
 using UnityEngine;
 
-public interface IMoveable
+namespace Characters.Interfaces
 {
-    void Move(Vector2 delta);
-    void Stop();
+    public interface IMoveable
+    {
+        void Move(Vector2 delta);
+        void Stop();
+    }
 }

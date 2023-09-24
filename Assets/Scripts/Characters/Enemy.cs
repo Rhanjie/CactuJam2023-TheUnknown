@@ -1,83 +1,85 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-public class Enemy : Character
+namespace Characters
 {
-    protected override void Update()
+    public class Enemy : Character
     {
-        base.Update();
-        
-        FindTarget();
-        
-        if (LookAt != null)
-            FollowTarget();
-        
-        else movement.Stop();
-    }
-
-    private void FollowTarget()
-    {
-        if (IsTargetInRange())
-            attack.Attack();
-        
-        else movement.Move(GetDirectionToTarget());
-    }
-
-    private Vector2 GetDirectionToTarget()
-    {
-        var position = transform.position;
-        var targetPosition = LookAt.transform.position;
-        var direction = new Vector2(targetPosition.x - position.x, targetPosition.y - position.y).normalized;
-
-        return direction;
-    }
-
-    private bool IsTargetInRange()
-    {
-        var position = transform.position;
-        var targetPosition = LookAt.transform.position;
-
-        var distance = new Vector2(targetPosition.x - position.x, targetPosition.y - position.y).magnitude;
-
-        return distance <= settings.range;
-    }
-
-    private void FindTarget()
-    {
-        var position = body.transform.position;
-        var size = new Vector2(20, 13);
-        var layerMask = LayerMask.GetMask("Player");
-
-        var result = Physics2D.OverlapBox(position, size, 0, layerMask);
-        
-        var player = result != null ? result.GetComponent<Player>() : null;
-        if (player == null)
+        protected override void Update()
         {
-            ResetTarget();
-            
-            return;
+            base.Update();
+        
+            FindTarget();
+        
+            if (LookAt != null)
+                FollowTarget();
+        
+            else movement.Stop();
         }
-        
-        LookAt = player.transform;
-    }
 
-    private void ResetTarget()
-    {
-        LookAt = null;
-    }
-
-    public override void Destroy()
-    {
-        //TODO: Effect
+        private void FollowTarget()
+        {
+            if (IsTargetInRange())
+                attack.Attack();
         
-        gameObject.SetActive(false);
-    }
+            else movement.Move(GetDirectionToTarget());
+        }
+
+        private Vector2 GetDirectionToTarget()
+        {
+            var position = transform.position;
+            var targetPosition = LookAt.transform.position;
+            var direction = new Vector2(targetPosition.x - position.x, targetPosition.y - position.y).normalized;
+
+            return direction;
+        }
+
+        private bool IsTargetInRange()
+        {
+            var position = transform.position;
+            var targetPosition = LookAt.transform.position;
+
+            var distance = new Vector2(targetPosition.x - position.x, targetPosition.y - position.y).magnitude;
+
+            return distance <= settings.range;
+        }
+
+        private void FindTarget()
+        {
+            var position = body.transform.position;
+            var size = new Vector2(20, 13);
+            var layerMask = LayerMask.GetMask("Player");
+
+            var result = Physics2D.OverlapBox(position, size, 0, layerMask);
+        
+            var player = result != null ? result.GetComponent<Player>() : null;
+            if (player == null)
+            {
+                ResetTarget();
+            
+                return;
+            }
+        
+            LookAt = player.transform;
+        }
+
+        private void ResetTarget()
+        {
+            LookAt = null;
+        }
+
+        public override void Destroy()
+        {
+            //TODO: Effect
+        
+            gameObject.SetActive(false);
+        }
     
-    private void OnDrawGizmos()
-    {
-        var position = body.transform.position;
-        var size = new Vector2(20, 13);
+        private void OnDrawGizmos()
+        {
+            var position = body.transform.position;
+            var size = new Vector2(20, 13);
         
-        Gizmos.DrawWireCube(position, size);
+            Gizmos.DrawWireCube(position, size);
+        }
     }
 }

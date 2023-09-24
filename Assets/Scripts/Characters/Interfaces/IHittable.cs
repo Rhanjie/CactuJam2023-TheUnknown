@@ -4,5 +4,5 @@ interface IHittable
 {
     public Transform Handler { get; }
 
-    public void Hit();
+    public void Hit(float damage);
 }

@@ -1,4 +1,5 @@
 using System;
+using Characters.Behaviours;
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -62,11 +63,20 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
         animator.SetFloat(Velocity, movement.Velocity);
     }
 
-    public void Hit()
+    public void Hit(float damage)
     {
         if (_isInsensitive)
             return;
-        
+
+        CurrentHealth -= damage;
+        if (CurrentHealth <= 0)
+            Destroy();
+
+        else HitAnimation();
+    }
+
+    private void HitAnimation()
+    {
         body.DOColor(Color.black, settings.insensitivityTime)
             .SetLoops(2, LoopType.Yoyo)
             .OnStart(() => _isInsensitive = true)
