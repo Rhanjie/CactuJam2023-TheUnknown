@@ -67,7 +67,7 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
         if (_isInsensitive)
             return;
         
-        body.DOColor(Color.red, settings.insensitivityTime)
+        body.DOColor(Color.black, settings.insensitivityTime)
             .SetLoops(2, LoopType.Yoyo)
             .OnStart(() => _isInsensitive = true)
             .OnComplete(() => _isInsensitive = false);
