@@ -22,12 +22,12 @@ public class TextAnimator : MonoBehaviour
             Init(defaultText);
     }
 
-    private void Init(string text)
+    public void Init(string text)
     {
-        var t = textObject.DOText(text, animationTime)
+        textObject.text = "";
+        
+         textObject.DOText(text, animationTime)
             .OnStart(() => textObject.text = "")
             .OnComplete(() => OnAnimationComplete?.Invoke());
-        
-        
     }
 }
