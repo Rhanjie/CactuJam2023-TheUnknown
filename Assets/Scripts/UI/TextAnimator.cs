@@ -25,6 +25,8 @@ public class TextAnimator : MonoBehaviour
     public void Init(string text)
     {
         textObject.text = "";
+
+        text = text.Replace("\\n", "\n");
         
          textObject.DOText(text, animationTime)
             .OnStart(() => textObject.text = "")

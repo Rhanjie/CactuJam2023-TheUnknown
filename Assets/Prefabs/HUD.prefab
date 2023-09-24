@@ -278,8 +278,10 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "New TextNewTextNew TextNew TextNewTextNewTextNew TextNew TextNew TextNew
-    TextNewTextNew TextNew \n\nTextNewTextNewTextNew TextNew TextNew Text"
+  m_Text: 'New TextNewTextNew TextNew TextNewTextNewTextNew TextNew TextNew TextNew
+    TextNewTextNew TextNew
+
+    TextNewTextNewTextNew TextNew TextNew Text'
 --- !u!1 &3006932738979911082
 GameObject:
   m_ObjectHideFlags: 0
