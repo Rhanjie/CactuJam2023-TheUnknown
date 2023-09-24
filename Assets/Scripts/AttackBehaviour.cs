@@ -19,25 +19,16 @@ public class AttackBehaviour : MonoBehaviour, IAttackable
     [SerializeField]
     private Transform hitPoint;
     
+    
     [SerializeField]
     private LayerMask layerMask;
-
-    [SerializeField]
-    private float attackTime = 0.3f;
     
-    private Camera _mainCamera;
     private CharacterSettings _settings;
+    private Transform _lookAt;
 
     private bool _isAnimation;
     private bool _reversedAttack;
-    
-    private void Start()
-    {
-        _mainCamera = GameObject
-            .FindWithTag("MainCamera")
-            .GetComponent<Camera>();
-    }
-    
+
     public void UpdateSettings(CharacterSettings settings)
     {
         _settings = settings;
@@ -45,7 +36,7 @@ public class AttackBehaviour : MonoBehaviour, IAttackable
 
     private void Update()
     {
-        if (!_isAnimation)
+        if (!_isAnimation && _lookAt != null)
             CalculateHandDirection();
     }
 
@@ -60,20 +51,23 @@ public class AttackBehaviour : MonoBehaviour, IAttackable
         
         _reversedAttack = !_reversedAttack;
     }
+
+    public void SetTarget(Transform target)
+    {
+        _lookAt = target;
+    }
     
     private void CalculateHandDirection()
     {
-        var direction = GetDirectionToMouse();
+        var direction = GetDirectionToTarget();
         handPoint.up = direction;
     }
 
-    private Vector2 GetDirectionToMouse()
+    private Vector2 GetDirectionToTarget()
     {
-        var mousePosition = Mouse.current.position;
-        var convertedPosition = _mainCamera.ScreenToWorldPoint(mousePosition.value);
-        
+        var targetPosition = _lookAt.position;
         var handPosition = transform.position;
-        var direction = new Vector2(handPosition.x - convertedPosition.x, handPosition.y - convertedPosition.y);
+        var direction = new Vector2(handPosition.x - targetPosition.x, handPosition.y - targetPosition.y);
 
         return direction;
     }
@@ -87,7 +81,7 @@ public class AttackBehaviour : MonoBehaviour, IAttackable
 
         StartCoroutine(StartHitting());
 
-        handPoint.DOLocalRotate(newRotation, attackTime, RotateMode.FastBeyond360)
+        handPoint.DOLocalRotate(newRotation, _settings.attackTime, RotateMode.FastBeyond360)
             .SetEase(Ease.InCubic)
             .SetRelative(true)
             .OnStart(() => slashEffect.emitting = true)
@@ -98,14 +92,14 @@ public class AttackBehaviour : MonoBehaviour, IAttackable
             });
         
         var newWeaponRotation = new Vector3(0, 0, 100 * direction);
-        weapon.DOLocalRotate(newWeaponRotation, attackTime, RotateMode.FastBeyond360)
+        weapon.DOLocalRotate(newWeaponRotation, _settings.attackTime, RotateMode.FastBeyond360)
             .SetEase(Ease.InCubic)
             .SetRelative(true);
     }
 
     private IEnumerator StartHitting()
     {
-        yield return new WaitForSeconds(attackTime / 2f);
+        yield return new WaitForSeconds(_settings.attackTime / 1.5f);
         
         slashEffect.emitting = true;
         var results = Physics2D.OverlapCircleAll(hitPoint.position, _settings.range, layerMask);
@@ -118,7 +112,7 @@ public class AttackBehaviour : MonoBehaviour, IAttackable
             
             hittable.Hit();
         }
-        
-        yield return new WaitForSeconds(attackTime / 2f);
+
+        yield return new WaitForSeconds(_settings.attackTime / 3f);
     }
 }

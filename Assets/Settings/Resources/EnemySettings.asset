@@ -15,8 +15,9 @@ MonoBehaviour:
   title: Enemy
   health: 10
   damage: 2
-  range: 2
-  insensitivityTime: 0.3
+  range: 1.6
+  insensitivityTime: 0.7
+  attackTime: 0.4
   speed: 5
   acceleration: 20
   friction: -20

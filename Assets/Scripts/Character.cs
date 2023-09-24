@@ -17,6 +17,9 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
     [SerializeField]
     protected SpriteRenderer body;
     
+    [SerializeField]
+    protected Transform lookAt;
+    
     public Transform Handler { get; private set; }
     public float CurrentHealth { get; private set; }
 
@@ -31,7 +34,10 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
     private void OnValidate()
     {
         movement.UpdateSettings(settings);
+        movement.SetTarget(lookAt);
+        
         attack.UpdateSettings(settings);
+        attack.SetTarget(lookAt);
     }
 
     public void Attack()

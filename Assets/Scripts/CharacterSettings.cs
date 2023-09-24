@@ -10,6 +10,7 @@ public class CharacterSettings : ScriptableObject
     public float damage;
     public float range;
     public float insensitivityTime;
+    public float attackTime;
     
     [Header("Movement")]
     public float speed;

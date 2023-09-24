@@ -13,21 +13,13 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
     [SerializeField]
     private Rigidbody2D physics;
     
-    [SerializeField]
-    private Transform handPoint;
     
     private Camera _mainCamera;
     private CharacterSettings _settings;
+    private Transform _lookAt;
     
     private float _horizontalMove;
     private float _verticalMove;
-
-    private void Start()
-    {
-        _mainCamera = GameObject
-            .FindWithTag("MainCamera")
-            .GetComponent<Camera>();
-    }
 
     public void UpdateSettings(CharacterSettings settings)
     {
@@ -36,7 +28,8 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
 
     private void FixedUpdate()
     {
-        CalculateTargetDirection();
+        if (_lookAt != null)
+            CalculateTargetDirection();
         
         var movement = CalculateMovement();
         ApplyForce(movement, ForceMode2D.Force);
@@ -81,6 +74,11 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
         
         physics.AddForce(force, mode);
     }
+    
+    public void SetTarget(Transform target)
+    {
+        _lookAt = target;
+    }
 
     private void CalculateTargetDirection()
     {
@@ -91,11 +89,12 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
 
     private Vector2 GetDirectionToMouse()
     {
-        var mousePosition = Mouse.current.position;
-        var convertedPosition = _mainCamera.ScreenToWorldPoint(mousePosition.value);
-        
+        var targetPosition = _lookAt.position;
         var handPosition = transform.position;
-        var direction = new Vector2(handPosition.x - convertedPosition.x, handPosition.y - convertedPosition.y);
+        var direction = new Vector2(
+            handPosition.x - targetPosition.x, 
+            handPosition.y - targetPosition.y
+        );
 
         return direction;
     }

@@ -14,6 +14,8 @@ public class Enemy : Character
 
     public override void Destroy()
     {
-        throw new System.NotImplementedException();
+        //TODO: Effect
+        
+        gameObject.SetActive(false);
     }
 }
