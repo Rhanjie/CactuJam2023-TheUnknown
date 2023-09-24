@@ -7,7 +7,7 @@ public class Enemy : Character
     {
         FindTarget();
         
-        if (lookAt != null)
+        if (LookAt != null)
             FollowTarget();
         
         else movement.Stop();
@@ -16,7 +16,7 @@ public class Enemy : Character
     private void FollowTarget()
     {
         var position = transform.position;
-        var targetPosition = lookAt.transform.position;
+        var targetPosition = LookAt.transform.position;
         var direction = new Vector2(targetPosition.x - position.x, targetPosition.y - position.y).normalized;
         
         Debug.LogError(direction);
@@ -29,7 +29,7 @@ public class Enemy : Character
     private bool IsTargetInRange()
     {
         var position = transform.position;
-        var targetPosition = lookAt.transform.position;
+        var targetPosition = LookAt.transform.position;
 
         var distance = new Vector2(targetPosition.x - position.x, targetPosition.y - position.y).magnitude;
 
@@ -52,12 +52,12 @@ public class Enemy : Character
             return;
         }
         
-        lookAt = player.transform;
+        LookAt = player.transform;
     }
 
     private void ResetTarget()
     {
-        lookAt = null;
+        LookAt = null;
     }
 
     public override void Destroy()

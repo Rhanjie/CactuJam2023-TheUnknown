@@ -18,8 +18,20 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
     protected SpriteRenderer body;
     
     [SerializeField]
-    protected Transform lookAt;
-    
+    private Transform lookAt;
+
+    public Transform LookAt
+    {
+        get => lookAt;
+        set
+        {
+            lookAt = value;
+            
+            movement.SetTarget(lookAt);
+            attack.SetTarget(lookAt);
+        }
+    }
+
     public Transform Handler { get; private set; }
     public float CurrentHealth { get; private set; }
 

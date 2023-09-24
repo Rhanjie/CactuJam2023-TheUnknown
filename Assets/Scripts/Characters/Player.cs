@@ -110,6 +110,6 @@ public class Player : Character
         var mousePosition = Mouse.current.position;
         var convertedPosition = _mainCamera.ScreenToWorldPoint(mousePosition.value);
 
-        lookAt.transform.position = convertedPosition;
+        LookAt.transform.position = convertedPosition;
     }
 }
