@@ -460,8 +460,8 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2455163752553981873}
-        m_TargetAssemblyTypeName: Character, Assembly-CSharp
-        m_MethodName: Attack
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: PerformAttack
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -474,19 +474,7 @@ MonoBehaviour:
     m_ActionId: 4cdf8e75-6192-4b9d-8d3b-260974486b44
     m_ActionName: Player/Attack[/Mouse/leftButton,/Touchscreen/primaryTouch/tap]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2455163752553981873}
-        m_TargetAssemblyTypeName: Character, Assembly-CSharp
-        m_MethodName: Jump
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: fae2ad09-1b22-4580-aa9e-f2a867ea9c72
     m_ActionName: Player/Jump[/Keyboard/space]
   - m_PersistentCalls:

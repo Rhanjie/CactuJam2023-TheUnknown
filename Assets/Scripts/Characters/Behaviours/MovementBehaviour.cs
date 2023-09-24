@@ -43,6 +43,12 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
         _horizontalMove = delta.x;
         _verticalMove = delta.y;
     }
+
+    public void Stop()
+    {
+        physics.velocity = Vector3.zero;
+        physics.angularVelocity = 0;
+    }
     
     private Vector2 CalculateMovement()
     {

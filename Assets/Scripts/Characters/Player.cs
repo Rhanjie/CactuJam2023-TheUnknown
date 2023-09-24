@@ -87,6 +87,11 @@ public class Player : Character
             
         movement.Move(delta);
     }
+    
+    public void PerformAttack()
+    {
+        attack.Attack();
+    }
 
     public override void Destroy()
     {

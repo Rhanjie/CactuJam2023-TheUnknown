@@ -18,7 +18,7 @@ MonoBehaviour:
   range: 1.6
   insensitivityTime: 1
   attackTime: 0.3
-  speed: 10
+  speed: 16
   acceleration: 30
   friction: -50
   test: 0

@@ -6,7 +6,7 @@ using UnityEngine;
 public abstract class Character : MonoBehaviour, IHittable, IDestroyable
 {
     [SerializeField]
-    private CharacterSettings settings;
+    protected CharacterSettings settings;
     
     [SerializeField]
     protected MovementBehaviour movement;
@@ -38,11 +38,6 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
         
         attack.UpdateSettings(settings);
         attack.SetTarget(lookAt);
-    }
-
-    public void Attack()
-    {
-        attack.Attack();
     }
 
     public void Hit()
