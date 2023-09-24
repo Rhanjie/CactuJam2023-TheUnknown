@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         FindTarget();
         
         if (LookAt != null)
@@ -15,15 +17,19 @@ public class Enemy : Character
 
     private void FollowTarget()
     {
+        if (IsTargetInRange())
+            attack.Attack();
+        
+        else movement.Move(GetDirectionToTarget());
+    }
+
+    private Vector2 GetDirectionToTarget()
+    {
         var position = transform.position;
         var targetPosition = LookAt.transform.position;
         var direction = new Vector2(targetPosition.x - position.x, targetPosition.y - position.y).normalized;
-        
-        Debug.LogError(direction);
-        movement.Move(direction);
-        
-        if (IsTargetInRange())
-            attack.Attack();
+
+        return direction;
     }
 
     private bool IsTargetInRange()

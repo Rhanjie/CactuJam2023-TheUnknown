@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 7678435571045375785}
   - component: {fileID: 4049953656240933743}
   - component: {fileID: 2149728021003371002}
+  - component: {fileID: 1356449264568908331}
   m_Layer: 0
   m_Name: Body
   m_TagString: Untagged
@@ -208,6 +209,27 @@ CapsuleCollider2D:
   m_Offset: {x: -0.000000028457912, y: -0.7387224}
   m_Size: {x: 1.0000002, y: 0.5225554}
   m_Direction: 1
+--- !u!95 &1356449264568908331
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517808926502295370}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 06c620e1fda8c3842a1edae067eb704c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &816639727720533255
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +403,7 @@ MonoBehaviour:
   movement: {fileID: 6779854854295258811}
   attack: {fileID: 3110556423869892845}
   body: {fileID: 4049953656240933743}
+  animator: {fileID: 1356449264568908331}
   lookAt: {fileID: 1550727680177390006}
   hud: {fileID: 3491359489494137186}
 --- !u!114 &6779854854295258811

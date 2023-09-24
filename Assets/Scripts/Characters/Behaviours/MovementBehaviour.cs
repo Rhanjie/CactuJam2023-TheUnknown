@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class MovementBehaviour : MonoBehaviour, IMoveable
 {
     public Vector2 Position { get; private set; }
+    public float Velocity { get; private set; }
     public bool IsFacingRight { get; private set; }
     
     [SerializeField]
@@ -36,6 +37,8 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
 
         var friction = CalculateFriction();
         ApplyForce(friction, ForceMode2D.Impulse);
+        
+        Velocity = physics.velocity.magnitude;
     }
     
     public void Move(Vector2 delta)
@@ -48,6 +51,9 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
     {
         physics.velocity = Vector3.zero;
         physics.angularVelocity = 0;
+
+        _horizontalMove = 0;
+        _verticalMove = 0;
     }
     
     private Vector2 CalculateMovement()

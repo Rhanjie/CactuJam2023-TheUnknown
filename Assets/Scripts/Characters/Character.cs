@@ -18,6 +18,9 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
     protected SpriteRenderer body;
     
     [SerializeField]
+    private Animator animator;
+    
+    [SerializeField]
     private Transform lookAt;
 
     public Transform LookAt
@@ -36,6 +39,8 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
     public float CurrentHealth { get; private set; }
 
     private bool _isInsensitive;
+    
+    private static readonly int Velocity = Animator.StringToHash("Velocity");
 
     private void Start()
     {
@@ -51,6 +56,11 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
         attack.UpdateSettings(settings);
         attack.SetTarget(lookAt);
     }
+    
+    protected virtual void Update()
+    {
+        animator.SetFloat(Velocity, movement.Velocity);
+    }
 
     public void Hit()
     {
@@ -62,6 +72,6 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
             .OnStart(() => _isInsensitive = true)
             .OnComplete(() => _isInsensitive = false);
     }
-    
+
     public abstract void Destroy();
 }

@@ -22,8 +22,10 @@ public class Player : Character
             .GetComponent<Camera>();
     }
 
-    private void Update()
+    protected override void Update()
     {
+        base.Update();
+        
         UpdateTargetPosition();
 
         InteractionChecker();
