@@ -1,8 +1,9 @@
 using System;
+using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public abstract class Character : MonoBehaviour, IAttackable, IHittable, IDestroyable
+public abstract class Character : MonoBehaviour, IHittable, IDestroyable
 {
     [SerializeField]
     private CharacterSettings settings;
@@ -13,10 +14,17 @@ public abstract class Character : MonoBehaviour, IAttackable, IHittable, IDestro
     [SerializeField]
     protected AttackBehaviour attack;
     
-    public float CurrentHealth { get; private set; }
+    [SerializeField]
+    protected SpriteRenderer body;
     
+    public Transform Handler { get; private set; }
+    public float CurrentHealth { get; private set; }
+
+    private bool _isInsensitive;
+
     private void Start()
     {
+        Handler = transform;
         CurrentHealth = settings.health;
     }
     
@@ -33,7 +41,13 @@ public abstract class Character : MonoBehaviour, IAttackable, IHittable, IDestro
 
     public void Hit()
     {
-        //TODO: Not implemented
+        if (_isInsensitive)
+            return;
+        
+        body.DOColor(Color.red, settings.insensitivityTime)
+            .SetLoops(2, LoopType.Yoyo)
+            .OnStart(() => _isInsensitive = true)
+            .OnComplete(() => _isInsensitive = false);
     }
     
     public abstract void Destroy();

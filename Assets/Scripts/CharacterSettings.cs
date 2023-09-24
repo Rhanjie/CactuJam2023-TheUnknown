@@ -2,12 +2,17 @@ using UnityEngine;
 
 public class CharacterSettings : ScriptableObject
 {
+    [Header("Main")]
     public string title;
-    public float health;
-    public float speed;
-    public float damage;
     
+    [Header("Attack")]
+    public float health;
+    public float damage;
+    public float range;
+    public float insensitivityTime;
+    
+    [Header("Movement")]
+    public float speed;
     public float acceleration;
-    public float velocityPower;
     public float friction;
 }

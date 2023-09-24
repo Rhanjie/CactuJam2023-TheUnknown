@@ -1,4 +1,7 @@
-﻿using DG.Tweening;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,8 +12,18 @@ public class AttackBehaviour : MonoBehaviour, IAttackable
     
     [SerializeField]
     private Transform weapon;
+    
+    [SerializeField]
+    private TrailRenderer slashEffect;
+    
+    [SerializeField]
+    private Transform hitPoint;
+    
+    [SerializeField]
+    private LayerMask layerMask;
 
-    public float attackTime = 0.3f;
+    [SerializeField]
+    private float attackTime = 0.3f;
     
     private Camera _mainCamera;
     private CharacterSettings _settings;
@@ -72,14 +85,40 @@ public class AttackBehaviour : MonoBehaviour, IAttackable
         var direction = _reversedAttack ? -1 : 1;
         var newRotation = new Vector3(0, 0, 180 * direction);
 
+        StartCoroutine(StartHitting());
+
         handPoint.DOLocalRotate(newRotation, attackTime, RotateMode.FastBeyond360)
             .SetEase(Ease.InCubic)
             .SetRelative(true)
-            .OnComplete(() => { _isAnimation = false; });
+            .OnStart(() => slashEffect.emitting = true)
+            .OnComplete(() =>
+            {
+                slashEffect.emitting = false;
+                _isAnimation = false;
+            });
         
         var newWeaponRotation = new Vector3(0, 0, 100 * direction);
         weapon.DOLocalRotate(newWeaponRotation, attackTime, RotateMode.FastBeyond360)
             .SetEase(Ease.InCubic)
             .SetRelative(true);
+    }
+
+    private IEnumerator StartHitting()
+    {
+        yield return new WaitForSeconds(attackTime / 2f);
+        
+        slashEffect.emitting = true;
+        var results = Physics2D.OverlapCircleAll(hitPoint.position, _settings.range, layerMask);
+
+        foreach (var hit in results)
+        {
+            var hittable = hit.transform.GetComponent<IHittable>();
+            if (hittable == null || hittable.Handler == transform)
+                continue;
+            
+            hittable.Hit();
+        }
+        
+        yield return new WaitForSeconds(attackTime / 2f);
     }
 }
