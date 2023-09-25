@@ -18,6 +18,7 @@ MonoBehaviour:
   range: 1.6
   insensitivityTime: 1
   attackTime: 0.3
+  nextAttackDelay: 0.1
   speed: 16
   acceleration: 30
   friction: -50
