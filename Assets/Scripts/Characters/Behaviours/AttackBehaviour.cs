@@ -26,6 +26,7 @@ namespace Characters.Behaviours
 
         private bool _isAnimation;
         private bool _reversedAttack;
+        private bool _canAttack = true;
 
         public void UpdateSettings(CharacterSettings settings)
         {
@@ -40,7 +41,7 @@ namespace Characters.Behaviours
 
         public void Attack()
         {
-            if (_isAnimation)
+            if (_isAnimation || !_canAttack)
                 return;
         
             SwordAnimation();
@@ -95,6 +96,8 @@ namespace Characters.Behaviours
 
         private IEnumerator StartHitting()
         {
+            _canAttack = false;
+            
             yield return new WaitForSeconds(_settings.attackTime / 1.5f);
         
             slashEffect.emitting = true;
@@ -109,7 +112,9 @@ namespace Characters.Behaviours
                 hittable.Hit(_settings.damage);
             }
 
-            yield return new WaitForSeconds(_settings.attackTime / 3f);
+            yield return new WaitForSeconds(_settings.attackTime / 3f + _settings.nextAttackDelay);
+
+            _canAttack = true;
         }
     }
 }

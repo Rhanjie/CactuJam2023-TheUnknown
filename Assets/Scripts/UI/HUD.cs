@@ -20,7 +20,7 @@ namespace UI
             if (difference > 0)
                 heartContainer.AddHealth(difference);
 
-            else heartContainer.RemoveHealth(difference);
+            else heartContainer.RemoveHealth(-difference);
         }
 
         public void ToggleInteractionText(bool value)

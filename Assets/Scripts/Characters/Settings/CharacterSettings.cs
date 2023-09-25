@@ -11,6 +11,7 @@ public class CharacterSettings : ScriptableObject
     public float range;
     public float insensitivityTime;
     public float attackTime;
+    public float nextAttackDelay;
     
     [Header("Movement")]
     public float speed;
