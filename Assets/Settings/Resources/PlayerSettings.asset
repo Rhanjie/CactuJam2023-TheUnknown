@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
   title: Player
-  health: 9
+  health: 10
   damage: 2
   range: 1.6
   insensitivityTime: 1

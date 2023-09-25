@@ -54,6 +54,10 @@ namespace Characters
             var layerMask = LayerMask.GetMask("Interactable");
 
             var results = Physics2D.OverlapBoxAll(position, size, layerMask).ToList();
+            
+            //TODO: Probably not needed because the list is already sorted by distance
+            //results = results.OrderBy(result => 
+            //    new Vector2(position.x - result.transform.position.x, position.y - result.transform.position.y).magnitude).ToList();
         
             var interactables = results
                 .Select(result => result.GetComponent<IInteractable>())

@@ -42,7 +42,7 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
     public int CurrentHealth
     {
         get => _currentHealth;
-        protected set
+        set
         {
             var difference = value - _currentHealth;
             OnHealthChanged?.Invoke(difference);

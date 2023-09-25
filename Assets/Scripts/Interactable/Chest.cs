@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
+using Characters;
+using Characters.Interfaces;
 using UnityEngine;
 
-public class Chest : MonoBehaviour
+namespace Interactable
 {
-    // Start is called before the first frame update
-    void Start()
+    public class Chest : MonoBehaviour, IInteractable
     {
-        
-    }
+        [SerializeField]
+        private int health;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public void Interact(Character character)
+        {
+            if (character is Player player)
+            {
+                player.CurrentHealth += health;
+                
+                Destroy(gameObject);
+            }
+        }
     }
 }
