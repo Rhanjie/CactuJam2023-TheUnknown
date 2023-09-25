@@ -14,6 +14,15 @@ namespace Characters.Behaviours
     
         [SerializeField]
         private TrailRenderer slashEffect;
+        
+        [SerializeField]
+        private AudioSource audioSource;
+        
+        [SerializeField]
+        private AudioClip hitSound;
+        
+        [SerializeField]
+        private AudioClip missSound;
     
         [SerializeField]
         private Transform hitPoint;
@@ -103,6 +112,9 @@ namespace Characters.Behaviours
             slashEffect.emitting = true;
             var results = Physics2D.OverlapCircleAll(hitPoint.position, _settings.range, layerMask);
 
+            var hitAnything = results.Length > 0;
+            PlaySound(hitAnything);
+
             foreach (var result in results)
             {
                 var hittable = result.transform.GetComponent<IHittable>();
@@ -115,6 +127,14 @@ namespace Characters.Behaviours
             yield return new WaitForSeconds(_settings.attackTime / 3f + _settings.nextAttackDelay);
 
             _canAttack = true;
+        }
+
+        private void PlaySound(bool hitAnything)
+        {
+            if (audioSource == null)
+                return;
+            
+            audioSource.PlayOneShot(hitAnything ? hitSound : missSound);
         }
     }
 }

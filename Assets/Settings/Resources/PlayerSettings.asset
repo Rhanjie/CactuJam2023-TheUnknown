@@ -16,7 +16,7 @@ MonoBehaviour:
   health: 10
   damage: 2
   range: 1.6
-  insensitivityTime: 1
+  insensitivityTime: 0.7
   attackTime: 0.3
   nextAttackDelay: 0.1
   speed: 16

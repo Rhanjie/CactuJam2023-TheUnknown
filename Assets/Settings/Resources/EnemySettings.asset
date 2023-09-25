@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: EnemySettings
   m_EditorClassIdentifier: 
   title: Enemy
-  health: 5
-  damage: 1
+  health: 4
+  damage: 2
   range: 1.3
-  insensitivityTime: 0.7
+  insensitivityTime: 0.4
   attackTime: 0.4
   nextAttackDelay: 0.3
   speed: 15

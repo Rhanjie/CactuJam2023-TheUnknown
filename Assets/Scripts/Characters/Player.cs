@@ -12,7 +12,7 @@ namespace Characters
     {
         [SerializeField]
         private HUD hud;
-    
+
         private Camera _mainCamera;
         private IInteractable _target = null;
     

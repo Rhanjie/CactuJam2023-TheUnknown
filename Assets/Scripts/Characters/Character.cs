@@ -23,6 +23,9 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
     private Animator animator;
     
     [SerializeField]
+    private AudioSource audioSource;
+    
+    [SerializeField]
     private Transform lookAt;
 
     public Transform LookAt
@@ -61,9 +64,16 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
     {
         Handler = transform;
         CurrentHealth = settings.health;
+
+        UpdateBehaviours();
     }
     
     private void OnValidate()
+    {
+        UpdateBehaviours();
+    }
+
+    private void UpdateBehaviours()
     {
         movement.UpdateSettings(settings);
         movement.SetTarget(lookAt);
@@ -91,6 +101,9 @@ public abstract class Character : MonoBehaviour, IHittable, IDestroyable
 
     private void HitAnimation()
     {
+        if (audioSource != null && !audioSource.isPlaying)
+            audioSource.Play();
+        
         body.DOColor(Color.black, settings.insensitivityTime)
             .SetLoops(2, LoopType.Yoyo)
             .OnStart(() => _isInsensitive = true)

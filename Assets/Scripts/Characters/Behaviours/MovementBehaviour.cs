@@ -59,6 +59,11 @@ public class MovementBehaviour : MonoBehaviour, IMoveable
     
     private Vector2 CalculateMovement()
     {
+        if (_settings == null)
+        {
+            Debug.LogError("EH PROBLEM Z SETTIGSAMI");
+        }
+        
         var targetSpeed = new Vector2(_horizontalMove, _verticalMove) * _settings.speed;
         var speedDifference = targetSpeed - physics.velocity;
         
